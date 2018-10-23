@@ -11,56 +11,56 @@ namespace Qualifica.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class AlocacoesController : ControllerBase
     {
         private readonly QualificaAPIContext _context;
 
-        public UsuariosController(QualificaAPIContext context)
+        public AlocacoesController(QualificaAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuarios
+        // GET: api/Alocacaos
         [HttpGet]
-        public IEnumerable<Usuario> GetUsuario()
+        public IEnumerable<Alocacao> GetAlocacao()
         {
-            return _context.Usuario;
+            return _context.Alocacao;
         }
 
-        // GET: api/Usuarios/5
+        // GET: api/Alocacaos/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUsuario([FromRoute] int id)
+        public async Task<IActionResult> GetAlocacao([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
+            var alocacao = await _context.Alocacao.FindAsync(id);
 
-            if (usuario == null)
+            if (alocacao == null)
             {
                 return NotFound();
             }
 
-            return Ok(usuario);
+            return Ok(alocacao);
         }
 
-        // PUT: api/Usuarios/5
+        // PUT: api/Alocacaos/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario([FromRoute] int id, [FromBody] Usuario usuario)
+        public async Task<IActionResult> PutAlocacao([FromRoute] int id, [FromBody] Alocacao alocacao)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != usuario.id)
+            if (id != alocacao.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            _context.Entry(alocacao).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace Qualifica.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuarioExists(id))
+                if (!AlocacaoExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace Qualifica.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Usuarios
+        // POST: api/Alocacaos
         [HttpPost]
-        public async Task<IActionResult> PostUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> PostAlocacao([FromBody] Alocacao alocacao)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Usuario.Add(usuario);
+            _context.Alocacao.Add(alocacao);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.id }, usuario);
+            return CreatedAtAction("GetAlocacao", new { id = alocacao.id }, alocacao);
         }
 
-        // DELETE: api/Usuarios/5
+        // DELETE: api/Alocacaos/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario([FromRoute] int id)
+        public async Task<IActionResult> DeleteAlocacao([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
+            var alocacao = await _context.Alocacao.FindAsync(id);
+            if (alocacao == null)
             {
                 return NotFound();
             }
 
-            _context.Usuario.Remove(usuario);
+            _context.Alocacao.Remove(alocacao);
             await _context.SaveChangesAsync();
 
-            return Ok(usuario);
+            return Ok(alocacao);
         }
 
-        private bool UsuarioExists(int id)
+        private bool AlocacaoExists(int id)
         {
-            return _context.Usuario.Any(e => e.id == id);
+            return _context.Alocacao.Any(e => e.id == id);
         }
     }
 }

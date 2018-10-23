@@ -11,56 +11,56 @@ namespace Qualifica.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class ObrasController : ControllerBase
     {
         private readonly QualificaAPIContext _context;
 
-        public UsuariosController(QualificaAPIContext context)
+        public ObrasController(QualificaAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuarios
+        // GET: api/Obras
         [HttpGet]
-        public IEnumerable<Usuario> GetUsuario()
+        public IEnumerable<Obra> GetObra()
         {
-            return _context.Usuario;
+            return _context.Obra;
         }
 
-        // GET: api/Usuarios/5
+        // GET: api/Obras/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUsuario([FromRoute] int id)
+        public async Task<IActionResult> GetObra([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
+            var obra = await _context.Obra.FindAsync(id);
 
-            if (usuario == null)
+            if (obra == null)
             {
                 return NotFound();
             }
 
-            return Ok(usuario);
+            return Ok(obra);
         }
 
-        // PUT: api/Usuarios/5
+        // PUT: api/Obras/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario([FromRoute] int id, [FromBody] Usuario usuario)
+        public async Task<IActionResult> PutObra([FromRoute] int id, [FromBody] Obra obra)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != usuario.id)
+            if (id != obra.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            _context.Entry(obra).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace Qualifica.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuarioExists(id))
+                if (!ObraExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace Qualifica.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Usuarios
+        // POST: api/Obras
         [HttpPost]
-        public async Task<IActionResult> PostUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> PostObra([FromBody] Obra obra)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Usuario.Add(usuario);
+            _context.Obra.Add(obra);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.id }, usuario);
+            return CreatedAtAction("GetObra", new { id = obra.id }, obra);
         }
 
-        // DELETE: api/Usuarios/5
+        // DELETE: api/Obras/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario([FromRoute] int id)
+        public async Task<IActionResult> DeleteObra([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
+            var obra = await _context.Obra.FindAsync(id);
+            if (obra == null)
             {
                 return NotFound();
             }
 
-            _context.Usuario.Remove(usuario);
+            _context.Obra.Remove(obra);
             await _context.SaveChangesAsync();
 
-            return Ok(usuario);
+            return Ok(obra);
         }
 
-        private bool UsuarioExists(int id)
+        private bool ObraExists(int id)
         {
-            return _context.Usuario.Any(e => e.id == id);
+            return _context.Obra.Any(e => e.id == id);
         }
     }
 }

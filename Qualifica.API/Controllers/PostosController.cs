@@ -11,56 +11,56 @@ namespace Qualifica.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class PostosController : ControllerBase
     {
         private readonly QualificaAPIContext _context;
 
-        public UsuariosController(QualificaAPIContext context)
+        public PostosController(QualificaAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuarios
+        // GET: api/Postoes
         [HttpGet]
-        public IEnumerable<Usuario> GetUsuario()
+        public IEnumerable<Posto> GetPosto()
         {
-            return _context.Usuario;
+            return _context.Posto;
         }
 
-        // GET: api/Usuarios/5
+        // GET: api/Postoes/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUsuario([FromRoute] int id)
+        public async Task<IActionResult> GetPosto([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
+            var posto = await _context.Posto.FindAsync(id);
 
-            if (usuario == null)
+            if (posto == null)
             {
                 return NotFound();
             }
 
-            return Ok(usuario);
+            return Ok(posto);
         }
 
-        // PUT: api/Usuarios/5
+        // PUT: api/Postoes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario([FromRoute] int id, [FromBody] Usuario usuario)
+        public async Task<IActionResult> PutPosto([FromRoute] int id, [FromBody] Posto posto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != usuario.id)
+            if (id != posto.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            _context.Entry(posto).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace Qualifica.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuarioExists(id))
+                if (!PostoExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace Qualifica.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Usuarios
+        // POST: api/Postoes
         [HttpPost]
-        public async Task<IActionResult> PostUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> PostPosto([FromBody] Posto posto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Usuario.Add(usuario);
+            _context.Posto.Add(posto);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.id }, usuario);
+            return CreatedAtAction("GetPosto", new { id = posto.id }, posto);
         }
 
-        // DELETE: api/Usuarios/5
+        // DELETE: api/Postoes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario([FromRoute] int id)
+        public async Task<IActionResult> DeletePosto([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
+            var posto = await _context.Posto.FindAsync(id);
+            if (posto == null)
             {
                 return NotFound();
             }
 
-            _context.Usuario.Remove(usuario);
+            _context.Posto.Remove(posto);
             await _context.SaveChangesAsync();
 
-            return Ok(usuario);
+            return Ok(posto);
         }
 
-        private bool UsuarioExists(int id)
+        private bool PostoExists(int id)
         {
-            return _context.Usuario.Any(e => e.id == id);
+            return _context.Posto.Any(e => e.id == id);
         }
     }
 }

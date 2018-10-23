@@ -11,56 +11,56 @@ namespace Qualifica.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuariosController : ControllerBase
+    public class EspecialidadesController : ControllerBase
     {
         private readonly QualificaAPIContext _context;
 
-        public UsuariosController(QualificaAPIContext context)
+        public EspecialidadesController(QualificaAPIContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuarios
+        // GET: api/Especialidades
         [HttpGet]
-        public IEnumerable<Usuario> GetUsuario()
+        public IEnumerable<Especialidade> GetEspecialidade()
         {
-            return _context.Usuario;
+            return _context.Especialidade;
         }
 
-        // GET: api/Usuarios/5
+        // GET: api/Especialidades/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUsuario([FromRoute] int id)
+        public async Task<IActionResult> GetEspecialidade([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
+            var especialidade = await _context.Especialidade.FindAsync(id);
 
-            if (usuario == null)
+            if (especialidade == null)
             {
                 return NotFound();
             }
 
-            return Ok(usuario);
+            return Ok(especialidade);
         }
 
-        // PUT: api/Usuarios/5
+        // PUT: api/Especialidades/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario([FromRoute] int id, [FromBody] Usuario usuario)
+        public async Task<IActionResult> PutEspecialidade([FromRoute] int id, [FromBody] Especialidade especialidade)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != usuario.id)
+            if (id != especialidade.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(usuario).State = EntityState.Modified;
+            _context.Entry(especialidade).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace Qualifica.API.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UsuarioExists(id))
+                if (!EspecialidadeExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace Qualifica.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Usuarios
+        // POST: api/Especialidades
         [HttpPost]
-        public async Task<IActionResult> PostUsuario([FromBody] Usuario usuario)
+        public async Task<IActionResult> PostEspecialidade([FromBody] Especialidade especialidade)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Usuario.Add(usuario);
+            _context.Especialidade.Add(especialidade);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUsuario", new { id = usuario.id }, usuario);
+            return CreatedAtAction("GetEspecialidade", new { id = especialidade.id }, especialidade);
         }
 
-        // DELETE: api/Usuarios/5
+        // DELETE: api/Especialidades/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario([FromRoute] int id)
+        public async Task<IActionResult> DeleteEspecialidade([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var usuario = await _context.Usuario.FindAsync(id);
-            if (usuario == null)
+            var especialidade = await _context.Especialidade.FindAsync(id);
+            if (especialidade == null)
             {
                 return NotFound();
             }
 
-            _context.Usuario.Remove(usuario);
+            _context.Especialidade.Remove(especialidade);
             await _context.SaveChangesAsync();
 
-            return Ok(usuario);
+            return Ok(especialidade);
         }
 
-        private bool UsuarioExists(int id)
+        private bool EspecialidadeExists(int id)
         {
-            return _context.Usuario.Any(e => e.id == id);
+            return _context.Especialidade.Any(e => e.id == id);
         }
     }
 }
