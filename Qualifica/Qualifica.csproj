@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <UserSecretsId>0178ca4a-d205-4188-847d-bfee26b5bf85</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\css\full-width-pics.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\full-width-pics.css" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.css" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.css" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.min.css" />
+    <None Include="wwwroot\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\vendor\jquery\jquery.js" />
+    <None Include="wwwroot\vendor\jquery\jquery.min.js" />
+    <None Include="wwwroot\vendor\jquery\jquery.min.map" />
+    <None Include="wwwroot\vendor\jquery\jquery.slim.js" />
+    <None Include="wwwroot\vendor\jquery\jquery.slim.min.js" />
+    <None Include="wwwroot\vendor\jquery\jquery.slim.min.map" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+</Project>

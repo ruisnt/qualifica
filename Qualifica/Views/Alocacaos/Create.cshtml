@@ -1,0 +1,45 @@
+﻿@model Qualifica.Models.Alocacao
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>Alocacao</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="idPosto" class="control-label"></label>
+                <input asp-for="idPosto" class="form-control" />
+                <span asp-validation-for="idPosto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="idUsuario" class="control-label"></label>
+                <input asp-for="idUsuario" class="form-control" />
+                <span asp-validation-for="idUsuario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Inicio" class="control-label"></label>
+                <input asp-for="Inicio" class="form-control" />
+                <span asp-validation-for="Inicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Termino" class="control-label"></label>
+                <input asp-for="Termino" class="form-control" />
+                <span asp-validation-for="Termino" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

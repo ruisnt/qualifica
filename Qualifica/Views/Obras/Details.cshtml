@@ -1,0 +1,42 @@
+﻿@model Qualifica.Models.Obra
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Obra</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Inicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Inicio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Termino)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Termino)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.idProprietario)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.idProprietario)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Endereco)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Endereco)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
