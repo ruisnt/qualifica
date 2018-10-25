@@ -29,21 +29,23 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item @ViewBag.Home">
                         <a class="nav-link" href="@Url.Action("Index", "Home")">
                             Home
-                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item @ViewBag.About">
                         <a class="nav-link" href="@Url.Action("About", "Home")">Sobre</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item @ViewBag.Especialidade">
+                        <a class="nav-link" href="@Url.Action("Index", "Especialidades")">Especialidade</a>
+                    </li>
+                    <li class="nav-item @ViewBag.Login">
                         <a class="nav-link" href="@Url.Action("Login", "Usuarios")">Login</a>
                     </li>
                     <!--<li class="nav-item">
-                      <a class="nav-link" href="#">Contact</a>
-                    </li>-->
+      <a class="nav-link" href="#">Contact</a>
+    </li>-->
                 </ul>
             </div>
         </div>

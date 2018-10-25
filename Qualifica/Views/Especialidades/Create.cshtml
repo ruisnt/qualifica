@@ -1,10 +1,10 @@
 ﻿@model Qualifica.Models.Especialidade
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nova Especialidade";
+    ViewBag.Especialidade = "active";
 }
 
-<h2>Create</h2>
 
 <h4>Especialidade</h4>
 <hr />
@@ -18,13 +18,13 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Enviar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar para lista</a>
 </div>
 

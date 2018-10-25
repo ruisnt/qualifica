@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Qualifica.Models;
 
 namespace Qualifica.Controllers
 {
     public class UsuariosController : Controller
     {
+        private readonly ISession session;
         private readonly QualificaContext _context;
 
-        public UsuariosController(QualificaContext context)
+        public UsuariosController(ISession session, QualificaContext context)
         {
+            this.session = session;
             _context = context;
         }
 
@@ -150,16 +154,32 @@ namespace Qualifica.Controllers
         }
 
 
+        [HttpGet]
+        public async Task<ActionResult> Login()
+        {
+            return View();
+        }
+
+
         // POST: Usuarios/Delete/5
         [HttpPost, ActionName("Login")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string login, string senha)
         {
             var usuario = await _context.Usuario.FirstOrDefaultAsync(item => item.Login == login && item.Senha == senha);
-            
 
+            if (usuario == null)
+                ViewBag.Erro = "Credenciais inválidas";
+            else
+            {
 
-            return RedirectToAction(nameof(Index));
+                string json = JsonConvert.SerializeObject(usuario);
+
+                session.SetString("Qualifica.Credencial", json);
+
+            }
+
+            return View();
         }
 
     }
