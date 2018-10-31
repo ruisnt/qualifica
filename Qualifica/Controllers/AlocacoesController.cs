@@ -9,11 +9,11 @@ using Qualifica.Models;
 
 namespace Qualifica.Controllers
 {
-    public class AlocacaosController : Controller
+    public class AlocacoesController : Controller
     {
         private readonly QualificaContext _context;
 
-        public AlocacaosController(QualificaContext context)
+        public AlocacoesController(QualificaContext context)
         {
             _context = context;
         }

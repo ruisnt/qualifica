@@ -32,6 +32,8 @@ namespace Qualifica
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<UserInfo>();
+
 
             services.AddDistributedMemoryCache();
 

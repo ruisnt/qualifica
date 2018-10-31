@@ -1,11 +1,11 @@
 ﻿@model Qualifica.Models.Alocacao
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Delete";
+    ViewBag.Alocacao = "active";
 }
 
-<h2>Details</h2>
-
+<h3>Deseja realmente remove este item?</h3>
 <div>
     <h4>Alocacao</h4>
     <hr />
@@ -35,8 +35,10 @@
             @Html.DisplayFor(model => model.Termino)
         </dd>
     </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="id" />
+        <input type="submit" value="Enviar" class="btn btn-default" /> |
+        <a asp-action="Index">Voltar para a lista</a>
+    </form>
 </div>

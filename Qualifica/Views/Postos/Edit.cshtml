@@ -2,9 +2,8 @@
 
 @{
     ViewData["Title"] = "Edit";
+    ViewBag.Posto = "active";
 }
-
-<h2>Edit</h2>
 
 <h4>Posto</h4>
 <hr />
@@ -29,13 +28,13 @@
                 <span asp-validation-for="idEspecialidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Enviar" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar a lista</a>
 </div>
 

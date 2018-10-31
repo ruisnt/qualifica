@@ -13,12 +13,13 @@ namespace Qualifica.Controllers
 {
     public class UsuariosController : Controller
     {
-        private readonly ISession session;
+        private readonly UserInfo userInfo;
         private readonly QualificaContext _context;
 
-        public UsuariosController(ISession session, QualificaContext context)
+        public UsuariosController(UserInfo userInfo, QualificaContext context)
         {
-            this.session = session;
+
+            this.userInfo = userInfo;
             _context = context;
         }
 
@@ -172,11 +173,10 @@ namespace Qualifica.Controllers
                 ViewBag.Erro = "Credenciais inválidas";
             else
             {
-
-                string json = JsonConvert.SerializeObject(usuario);
-
-                session.SetString("Qualifica.Credencial", json);
-
+                userInfo.Logado = true;
+                userInfo.id = usuario.id;
+                userInfo.Nome = usuario.Nome;
+                userInfo.Login = usuario.Login;
             }
 
             return View();
