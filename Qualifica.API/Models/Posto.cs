@@ -8,7 +8,6 @@ namespace Qualifica.API.Models
         public string Nome { get; set; }
         public int Quantidade { get; set; }
         public int idEspecialidade { get; set; }
-
-        public IEnumerable<Contrato> Alocacoes { get; set; }
+        public int idObra { get; set; }
     }
 }

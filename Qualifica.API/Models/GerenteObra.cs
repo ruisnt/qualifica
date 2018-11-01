@@ -7,5 +7,6 @@
         public string CPF { get; set; }
         public string RG { get; set; }
         public int idConstrutora { get; set; }
+        public int? idGerente { get; set; }
     }
 }

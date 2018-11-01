@@ -14,8 +14,28 @@ namespace Qualifica.API.Models
         {
         }
 
-        public DbSet<Qualifica.API.Models.Usuario> Usuario { get; set; }
+        public DbSet<Qualifica.API.Models.Alocacao> Alocacao { get; set; }
+
+        public DbSet<Qualifica.API.Models.Conquista> Conquista { get; set; }
+
+        public DbSet<Qualifica.API.Models.ConquistaTrabalhador> ConquistaTrabalhador { get; set; }
+
+        public DbSet<Qualifica.API.Models.Construtora> Construtora { get; set; }
+
+        public DbSet<Qualifica.API.Models.Curso> Curso { get; set; }
+
+        public DbSet<Qualifica.API.Models.Especialidade> Especialidade { get; set; }
+
+        public DbSet<Qualifica.API.Models.EspecialidadeTrabalhador> EspecialidadeTrabalhador { get; set; }
+
+        public DbSet<Qualifica.API.Models.GerenteObra> GerenteObra { get; set; }
+
+        public DbSet<Qualifica.API.Models.Obra> Obra { get; set; }
+
+        public DbSet<Qualifica.API.Models.Posto> Posto { get; set; }
 
         public DbSet<Qualifica.API.Models.Trabalhador> Trabalhador { get; set; }
+
+        public DbSet<Qualifica.API.Models.Usuario> Usuario { get; set; }
     }
 }

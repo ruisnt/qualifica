@@ -11,7 +11,5 @@ namespace Qualifica.API.Models
         public int idConstrutora { get; set; }
         public int? idGerente { get; set; }
         public string Endereco { get; set; }
-
-        public IEnumerable<Posto> Postos { get; set; }
     }
 }
