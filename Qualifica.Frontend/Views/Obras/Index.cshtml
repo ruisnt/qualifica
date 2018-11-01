@@ -1,4 +1,40 @@
-﻿<div class="card mb-3">
+﻿
+<div class="card mb-3 d-none" id="formulario">
+    <div class="card-header">
+        <h3><i class="fa fa-wpforms"></i> <span id="TituloFormulario">Incluir</span></h3>
+    </div>
+
+    <div class="card-body">
+
+        <form onsubmit="salvarRegistro(this);">
+            <input type="hidden" name="id" />
+            <div class="row">
+                <div class="col-md-4 mb-2">
+                    <label for="validationServer01">Início</label>
+                    <input name="inicio" type="text" class="form-control data" placeholder="Início da obra" required="required">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <label for="validationServer01">Término</label>
+                    <input name="termino" type="text" class="form-control data" placeholder="Término da obra" required="required">
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 mb-2">
+                    <label for="validationServer01">Endereço</label>
+                    <input name="endereco" type="text" class="form-control" placeholder="Endereço">
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" type="submit">Enviar</button>
+            <button class="btn btn-primary" type="button" onclick="fecharFormulario();">Fechar</button>
+        </form>
+    </div>
+</div>
+
+<div class="card mb-3">
     <div class="card-header">
         <h3><i class="fa fa-table"></i> Obras</h3>
     </div>
@@ -13,89 +49,228 @@
 </div>
 
 @section Scripts{
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js" type="text/javascript"></script>
+    <script src="@Url.Content("~/assets/js/jquery-dateformat.min.js")"></script>
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
     <script type="text/javascript">
 
-    var grid;
-    var url = "http://api.qualifica.pro.br/api/obras/";
+        var grid;
+        var url = "http://api.qualifica.pro.br/api/obras/";
 
-    function removerRegistro(id) {
-        if (!confirm("Deseja realmente remover este item?"))
-            return;
+        function removerRegistro(id) {
+            if (!confirm("Deseja realmente remover este item?"))
+                return;
 
-        $.ajax({
-            url: url + id,
-            type: 'DELETE'
-        }).done(atualizarGrid);
-    }
+            $.ajax({
+                url: url + id,
+                type: 'DELETE'
+            }).done(atualizarGrid);
+        }
+        function resetarValidacao(form) {
+            form.find(".is-invalid").removeClass("is-invalid");
+            form.find(".invalid-feedback").html("");
+        }
 
-    function editarRegistro(id){
+        function limparFormulario(form) {
 
+            form.find("input").val("");
 
+            resetarValidacao(form);
+        }
 
-    }
+        function salvarRegistro(form) {
+            event.preventDefault();
 
-    function atualizarGrid() {
-        $.get(url)
-            .done(function (data) {
-                grid.clear();
-                grid
-                    .rows
-                    .add(data)
-                    .draw();
+            form = $(form);
+
+            var valores = form.serializeArray();
+
+            var objeto = {};
+            $.each(valores, function (i, item) {
+                objeto[item.name] = item.value;
             });
-    }
 
-    $(document).ready(function() {
+            var valido = validacao(form, objeto);
 
-        $(".menu").removeClass("active");
-        $(".obras").addClass("active");
-        $(".controller").html("Obras");
+            if (valido) {
+                var metodo = "POST";
+                var endereco = url;
 
-        grid = $('#grid').DataTable({
-            data: [],
-            columns: [
-                {
-                    title: "",
-                    data: "id",
-                    width: "20px",
-                    render: function (data, type) {
-                        if (type === 'display') {
+                if (!objeto.id)
+                    objeto.id = 0;
 
-                            var editar = '<a href="#" title="Editar" onclick="editarRegistro(' + data + ');" class="fa fa-pencil">&nbsp;</a>';
-                            var excluir = '<a href="#" title="Excluir" onclick="removerRegistro(' + data + ');" class="fa fa-remove">&nbsp;</a>';
+                if (objeto.id > 0) {
+                    metodo = "PUT";
+                    endereco += objeto.id;
+                }
 
-                            data = editar + '&nbsp;' + excluir;
+                $.ajax({
+                    url: endereco,
+                    type: metodo,
+                    data: JSON.stringify(objeto),
+                    contentType: 'application/json'
+                })
+                    .done(function () {
+                        fecharFormulario();
+                        atualizarGrid();
+                    })
+                    .fail(function (data) {
+                        console.log(data);
+                        alert(data.responseText);
+                    });
+            }
+        }
+
+        function validacao(form, entidade) {
+
+            var valido = true;
+
+            if (!entidade.inicio) {
+                var controle = form.find("[name=inicio]");
+                controle.addClass("is-invalid");
+                controle.next(".invalid-feedback").html("Início deve ser informado");
+                valido = false;
+            }
+
+            if (!entidade.termino) {
+                var controle = form.find("[name=termino]");
+                controle.addClass("is-invalid");
+                controle.next(".invalid-feedback").html("Término deve ser informado");
+                valido = false;
+            }
+
+            return valido;
+        }
+
+        function abrirFormulario() {
+            var container = $('#formulario');
+            var form = container.find("form");
+            limparFormulario(form);
+
+            container.removeClass('d-none');
+
+            return form;
+        }
+
+        function fecharFormulario() {
+
+            var container = $('#formulario');
+            var form = container.find("form");
+            limparFormulario(form);
+
+            container.addClass('d-none');
+        }
+
+        function incluirRegistro() {
+            event.preventDefault();
+            $("#TituloFormulario").html("Incluir");
+
+            abrirFormulario();
+        }
+
+        function editarRegistro(id) {
+            event.preventDefault();
+            $("#TituloFormulario").html("Editar");
+            abrirFormulario();
+
+            $.get(url + id).done(function (data) {
+                var container = $('#formulario');
+                var form = container.find("form");
+
+                data.inicio = $.format.date(data.inicio, "dd/MM/yyyy");
+                data.termino = $.format.date(data.termino, "dd/MM/yyyy");
+
+                form.data("item", data);
+
+                $.each(data, function (prop, valor) {
+                    form.find("[name=" + prop + "]").val(valor);
+                });
+            })
+        }
+
+        function atualizarGrid() {
+            $.get(url)
+                .done(function (data) {
+                    grid.clear();
+                    grid
+                        .rows
+                        .add(data)
+                        .draw();
+                });
+        }
+
+        $(document).ready(function () {
+            $('.data').mask('00/00/0000');
+
+            $(".menu").removeClass("active");
+            $(".obras").addClass("active");
+            $(".controller").html("Obras");
+
+            grid = $('#grid').DataTable({
+                data: [],
+                columns: [
+                    {
+                        title: "<a href=\"#\" onclick=\"incluirRegistro();\" title=\"Incluir\" class=\"fa fa-plus\">&nbsp;</a>",
+                        data: "id",
+                        width: "20px",
+                        render: function (data, type) {
+                            if (type === 'display') {
+
+                                var editar = '<a href="#" title="Editar" onclick="editarRegistro(' + data + ');" class="fa fa-pencil">&nbsp;</a>';
+                                var excluir = '<a href="#" title="Excluir" onclick="removerRegistro(' + data + ');" class="fa fa-remove">&nbsp;</a>';
+
+                                data = editar + '&nbsp;' + excluir;
+                            }
+
+                            return data;
                         }
+                    },
+                    { title: "id", data: "id", width: "20px", },
+                    {
+                        title: "Início",
+                        data: "inicio",
+                        render: function (data, type) {
 
-                        return data;
+                            if (type == 'display') {
+                                data = $.format.date(data, "dd/MM/yyyy")
+                            }
+
+                            return data;
+                        }
+                    },
+                    {
+                        title: "Término",
+                        data: "termino",
+                        render: function (data, type) {
+
+                            if (type == 'display') {
+                                data = $.format.date(data, "dd/MM/yyyy")
+                            }
+
+                            return data;
+                        }
+                    },
+                    { title: "Endereço", data: "endereco" },
+                ],
+                language: {
+                    "lengthMenu": "_MENU_ registros por página",
+                    "zeroRecords": "Nenhum registro encontrado",
+                    "info": "Exibindo _PAGE_ de _PAGES_",
+                    "infoEmpty": "Nenhum registro encontrado",
+                    "infoFiltered": "(Filtrado de _MAX_ registros)",
+                    "search": "Busca:",
+                    "paginate": {
+                        "first": "Primeiro",
+                        "last": "Último",
+                        "next": "Próximo",
+                        "previous": "Anterior"
                     }
                 },
-                { title: "id", data: "id", width: "20px", },
-                { title: "Início", data: "inicio" },
-                { title: "Término", data: "termino" },
-                { title: "Endereço", data: "endereco" },
-            ],
-            language: {
-                "lengthMenu": "_MENU_ registros por página",
-                "zeroRecords": "Nenhum registro encontrado",
-                "info": "Exibindo _PAGE_ de _PAGES_",
-                "infoEmpty": "Nenhum registro encontrado",
-                "infoFiltered": "(Filtrado de _MAX_ registros)",
-                "search": "Busca:",
-                "paginate": {
-                    "first": "Primeiro",
-                    "last": "Último",
-                    "next": "Próximo",
-                    "previous": "Anterior"
-                }
-            },
-            pagingType: "numbers"
-        });
+                pagingType: "numbers"
+            });
 
-        atualizarGrid();
-    });
+            atualizarGrid();
+        });
     </script>
 }
 
