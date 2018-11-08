@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,9 +23,23 @@ namespace Qualifica.API.Controllers
 
         // GET: api/Obras
         [HttpGet]
-        public IEnumerable<Obra> GetObra()
+        public IEnumerable<DTO.Obra> GetObra()
         {
-            return _context.Obra;
+            var lista = from obra in _context.Obra
+                        join construtora in _context.Construtora
+                            on obra.idConstrutora equals construtora.id
+                        select new DTO.Obra
+                        {
+                            Construtora = construtora.Nome,
+                            Endereco = obra.Endereco,
+                            id = obra.id,
+                            idConstrutora = obra.idConstrutora,
+                            idGerente = obra.idGerente,
+                            Inicio = obra.Inicio,
+                            Termino = obra.Termino
+                        };
+
+            return lista;
         }
 
         // GET: api/Obras/5
@@ -43,13 +58,15 @@ namespace Qualifica.API.Controllers
                 return NotFound();
             }
 
-            return Ok(obra);
+            return Ok(Mapper.Map<DTO.Obra>(obra));
         }
 
         // PUT: api/Obras/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutObra([FromRoute] int id, [FromBody] Obra obra)
+        public async Task<IActionResult> PutObra([FromRoute] int id, [FromBody] DTO.Obra dtoObra)
         {
+            Obra obra = Mapper.Map<Obra>(dtoObra);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -83,8 +100,10 @@ namespace Qualifica.API.Controllers
 
         // POST: api/Obras
         [HttpPost]
-        public async Task<IActionResult> PostObra([FromBody] Obra obra)
+        public async Task<IActionResult> PostObra([FromBody] DTO.Obra dtoObra)
         {
+            Obra obra = Mapper.Map<Obra>(dtoObra);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -93,7 +112,9 @@ namespace Qualifica.API.Controllers
             _context.Obra.Add(obra);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetObra", new { id = obra.id }, obra);
+            dtoObra.id = obra.id;
+
+            return CreatedAtAction("GetObra", new { id = obra.id }, dtoObra);
         }
 
         // DELETE: api/Obras/5
@@ -114,7 +135,7 @@ namespace Qualifica.API.Controllers
             _context.Obra.Remove(obra);
             await _context.SaveChangesAsync();
 
-            return Ok(obra);
+            return Ok();
         }
 
         private bool ObraExists(int id)

@@ -22,6 +22,13 @@
             </div>
             <div class="row">
                 <div class="col-md-8 mb-2">
+                    <label>Construtora</label>
+                    <select name="idConstrutora" class="form-control"></select>
+                    <div class="invalid-feedback"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 mb-2">
                     <label for="validationServer01">Endereço</label>
                     <input name="endereco" type="text" class="form-control" placeholder="Endereço">
                     <div class="invalid-feedback"></div>
@@ -56,6 +63,7 @@
 
         var grid;
         var url = "http://api.qualifica.pro.br/api/obras/";
+        var urlConstrutora = "http://api.qualifica.pro.br/api/construtoras/";
 
         function removerRegistro(id) {
             if (!confirm("Deseja realmente remover este item?"))
@@ -168,6 +176,33 @@
             abrirFormulario();
         }
 
+
+        function carregarCombo() {
+
+            var cb = $("select[name=idConstrutora]");
+
+            cb.children().remove();
+
+            $.get(urlConstrutora)
+                .done(function (data) {
+
+
+                    $("<option />", {
+                        value: "",
+                        html: "--SELECIONE--",
+                        selected: "selected"
+                    }).appendTo(cb);
+
+                    $.each(data, function (i, item) {
+                        $("<option />", {
+                            value: item.id,
+                            html: item.nome
+                        }).appendTo(cb);
+                    });
+
+                })
+        }
+
         function editarRegistro(id) {
             event.preventDefault();
             $("#TituloFormulario").html("Editar");
@@ -205,6 +240,8 @@
             $(".menu").removeClass("active");
             $(".obras").addClass("active");
             $(".controller").html("Obras");
+
+            carregarCombo();
 
             grid = $('#grid').DataTable({
                 data: [],

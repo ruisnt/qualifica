@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,12 @@ namespace Qualifica.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            Mapper.Initialize(cfg => {
+
+                cfg.CreateMap<Obra, DTO.Obra>()
+                    .ReverseMap();
+            });
 
             services.AddSwaggerGen(c =>
             {
