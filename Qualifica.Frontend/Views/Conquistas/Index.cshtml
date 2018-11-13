@@ -54,6 +54,11 @@
         $(".controller").html("Conquistas");
 
         grid = $('#grid').DataTable({
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "bAutoWidth": true,
             data: [],
             columns: [
                 {

@@ -749,9 +749,13 @@ body.adminbody .main-sidebar.left {
 		text-align: left;
 	}
 
-	div#datatable-buttons_info {
-		float: none;
-	}
+    .dataTables_wrapper table {
+        width: 100%;
+    }
+
+    div#datatable-buttons_info {
+        float: none;
+    }
 
 	.ms-container {
 		width: 100%;

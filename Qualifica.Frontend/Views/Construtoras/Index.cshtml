@@ -197,6 +197,11 @@
         $(".controller").html("Construtoras");
 
         grid = $('#grid').DataTable({
+            "bPaginate": false,
+            "bLengthChange": false,
+            "bFilter": false,
+            "bInfo": false,
+            "bAutoWidth": true,
             data: [],
             columns: [
                 {
